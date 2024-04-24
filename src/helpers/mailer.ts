@@ -7,8 +7,17 @@ export const sendMail = async ({ email, emailType, userId }: any) => {
 
         if (emailType === "VERIFY") {
             await User.findByIdAndUpdate(userId, {
-                verifyToken: hashedToken,
-                verifyTokenExpiry: Date.now() + 3600000,
+                $set: {
+                    verifyToken: hashedToken,
+                    verifyTokenExpiry: Date.now() + 3600000,
+                },
+            })
+        } else if (emailType == "RESET") {
+            await User.findByIdAndUpdate(userId, {
+                $set: {
+                    forgotPasswordToken: hashedToken,
+                    forgotPasswordTokenExpiry: Date.now() + 3600000,
+                },
             })
         }
         const transporter = nodemailer.createTransport({
@@ -21,8 +30,8 @@ export const sendMail = async ({ email, emailType, userId }: any) => {
         })
 
         const mailOptions = {
-            from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
-            to: "bar@example.com, baz@example.com", // list of receivers
+            from: "anishudupa29@gmail.com", // sender address
+            to: email, // list of receivers
             subject: "Hello ✔", // Subject line
             html: `<p>Click <a href="${
                 process.env.DOMAIN

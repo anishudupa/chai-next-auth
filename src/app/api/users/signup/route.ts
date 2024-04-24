@@ -33,11 +33,11 @@ export async function POST(req: NextRequest) {
         newUser = await User.findById(newUser._id).select("-password")
 
         // send verification email
-        // await sendMail({
-        //     email,
-        //     emailType: "VERIFY",
-        //     userId: newUser._id,
-        // })
+        await sendMail({
+            email,
+            emailType: "VERIFY",
+            userId: newUser._id,
+        })
 
         return NextResponse.json({
             message: "user registered successfully",
