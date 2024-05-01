@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         const validPassword = await bcrypt.compare(password, user.password)
         if (!validPassword)
             return NextResponse.json(
-                { eroor: "check your credentials" },
+                { error: "check your credentials" },
                 { status: 400 }
             )
         const payload = {

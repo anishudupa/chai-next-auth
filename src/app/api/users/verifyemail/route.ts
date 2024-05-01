@@ -8,18 +8,15 @@ export async function POST(req: NextRequest) {
     try {
         const reqbody = await req.json()
         const { token } = reqbody
-
         if (!token)
             return NextResponse.json({ message: "no token" }, { status: 400 })
-        console.log(token)
         const user = await User.findOne({
             verifyToken: token,
             verifyTokenExpiry: { $gt: Date.now() },
         })
-
         if (!user)
             return NextResponse.json(
-                { eroor: "invalid token" },
+                { error: "invalid token" },
                 { status: 400 }
             )
 

@@ -18,8 +18,8 @@ function Signup() {
 
     const onSignup = async () => {
         try {
-            const response = await axios.post("/api/users/signup", user)
             setLoading(true)
+            const response = await axios.post("/api/users/signup", user)
             console.log("singup success", response.data)
             toast.success("signup success", {
                 position: "top-center",
